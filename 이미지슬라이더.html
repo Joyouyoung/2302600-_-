@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2302600 조유영 이미지 슬라이더</title>
+  <style>
+    #slider-container {
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    #image-slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    #prev, #next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: white;
+      background-color: black;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    #prev { left: 10px; }
+    #next { right: 10px; }
+  </style>
+</head>
+<body>
+
+<div id="slider-container">
+  <div id="image-slider">
+    <div class="slide"><img src="강아지1.jpg" alt="강아지1 1"></div>
+    <div class="slide"><img src="강아지2.jpg" alt="강아지2 2"></div>
+    <div class="slide"><img src="강아지3.jpg" alt="강아지3 3"></div>
+    <div class="slide"><img src="강아지4.jpg" alt="강아지4 4"></div>
+    <!-- 추가 이미지를 필요에 따라 계속 추가할 수 있습니다. -->
+  </div>
+  <button id="prev">&lt;</button>
+  <button id="next">&gt;</button>
+</div>
+
+<script>
+  const slider = document.getElementById('image-slider');
+  const prevButton = document.getElementById('prev');
+  const nextButton = document.getElementById('next');
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    const newPosition = -index * 100 + '%';
+    slider.style.transform = 'translateX(' + newPosition + ')';
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slider.children.length) % slider.children.length;
+    showSlide(currentIndex);
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slider.children.length;
+    showSlide(currentIndex);
+  }
+
+  function startAutoSlide() {
+    intervalId = setInterval(nextSlide, 3000); // 3초마다 자동으로 다음 이미지로 전환
+  }
+
+  function stopAutoSlide() {
+    clearInterval(intervalId);
+  }
+
+  prevButton.addEventListener('click', () => {
+    stopAutoSlide();
+    prevSlide();
+  });
+
+  nextButton.addEventListener('click', () => {
+    stopAutoSlide();
+    nextSlide();
+  });
+
+  startAutoSlide();
+
+  prevButton.addEventListener('click', prevSlide);
+  nextButton.addEventListener('click', nextSlide);
+</script>
+
+</body>
+</html>
